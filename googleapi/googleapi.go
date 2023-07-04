@@ -10,13 +10,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
+	"google.golang.org/api/internal/third_party/uritemplates"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
-
-	"google.golang.org/api/internal/third_party/uritemplates"
 )
 
 // ContentTyper is an interface for Readers which know (or would like
@@ -205,7 +205,7 @@ func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
 	if wrap {
 		buf.Write([]byte(`{"data": `))
 	}
-	err := json.NewEncoder(buf).Encode(v)
+	err := jsoniter.NewEncoder(buf).Encode(v)
 	if err != nil {
 		return nil, err
 	}
